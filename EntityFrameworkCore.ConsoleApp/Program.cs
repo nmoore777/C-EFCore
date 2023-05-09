@@ -1,5 +1,6 @@
 ﻿using EntityFrameworkCore.Data;
 using EntityFrameworkCore.Domain;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Identity.Client;
@@ -9,9 +10,12 @@ namespace EntityFrameworkCore.ConsoleAppv
     internal class Program
     {
         private static FootballLeageDbContext context = new FootballLeageDbContext();
+        private static League RECORD_LEAGUE = new League { };
+        private static Team RECORD_TEAM = new Team { };
         static async Task Main(string[] args)
         {
             var league = new League { Name = "Red Premiere League" };
+            var testRemoveLeage = new League { Name = "Delete Me" };
 
             // await AddNewLeague(league);
             // await AddTeamsWithLeagueId(league);
@@ -21,14 +25,48 @@ namespace EntityFrameworkCore.ConsoleAppv
             // await AdditionalExecutionMethods();
             // await altLINQSyntax();
 
-            await UpdateRecord();
+            //await UpdateRecord();
+
+
+
+            // methods for removing records
+            /*
+            await AddNewLeague(testRemoveLeage); //insert league into table
+            await GetRecord("league", testRemoveLeage.Id); //sanity check get record from table
+            await SimpleDelete(testRemoveLeage); //remove record
+            //sanity check record is removed from table -- expecting exception to occur
+            try
+            {
+                await GetRecord("league", testRemoveLeage.Id); 
+            }
+            catch
+            {
+                Console.WriteLine("Sorry this record cannot be found");
+            }
+            */
+            //await DeleteWithRelationship();
+
+            /* same thing but for a record that currently exists and has ties, this must be set up beforehand for this method to work
+            try
+            {
+                await GetRecord("league", 4);
+                await DeleteWithRelationship(RECORD_LEAGUE);
+            }
+            catch
+            {
+                Console.WriteLine("Sorry this record cannot be found");
+            }
+            */
+
+            //await TrackingVsNoTracking();
+
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
         }
 
         static async Task AddNewLeague(League league)
         {
-            await context.Leagues.AddAsync(league); //define db context - table to interact with - option (object) -- ac tion happens in memory
+            await context.Leagues.AddAsync(league); //define db context - table to interact with - option (object) -- action happens in memory
             await context.SaveChangesAsync(); //generate sql and execute action on db
         }
 
@@ -218,11 +256,13 @@ namespace EntityFrameworkCore.ConsoleAppv
             {
                 var record = await context.Teams.FindAsync(id);
                 Console.WriteLine($"{record.Id} - {record.Name}");
+                RECORD_TEAM = record;
             }
             else if (type == "league")
             {
                 var record = await context.Leagues.FindAsync(id);
                 Console.WriteLine($"{record.Id} - {record.Name}");
+                RECORD_LEAGUE = record;
             }
             else
             {
@@ -230,6 +270,43 @@ namespace EntityFrameworkCore.ConsoleAppv
                 Console.Write("The record was not found please try again");
                 cts.Cancel();
             }
+        }
+
+        private static async Task SimpleDelete(League league)
+        {
+            context.Leagues.Remove(league);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task DeleteWithRelationship(League league)
+        {
+            context.Leagues.Remove(league);
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task TrackingVsNoTracking()
+        {
+            var with = await context.Teams.FirstOrDefaultAsync(q => q.Id == 4);
+            var withOut = await context.Teams.AsNoTracking().FirstOrDefaultAsync(q => q.Id == 6);
+
+            with.Name = "This Team";
+            withOut.Name = "That Team";
+
+            var entriesBeforeSave = context.ChangeTracker.Entries();
+            foreach(var i in entriesBeforeSave)
+            {
+                Console.WriteLine(i.ToString());
+
+            }
+            await context.SaveChangesAsync();
+
+            var entriesAfterSave = context.ChangeTracker.Entries();
+            foreach (var i in entriesAfterSave)
+            {
+                Console.WriteLine(i.ToString());
+
+            }
+
         }
     }
 }
