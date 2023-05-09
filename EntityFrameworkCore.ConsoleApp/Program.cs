@@ -1,5 +1,6 @@
 ﻿using EntityFrameworkCore.Data;
 using EntityFrameworkCore.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.ConsoleAppv
 {
@@ -9,18 +10,17 @@ namespace EntityFrameworkCore.ConsoleAppv
         static async Task Main(string[] args)
         {
             var league = new League { Name = "Red Premiere League" };
-            
-           // await AddNewLeague(league);
-           // await AddTeamsWithLeagueId(league);
 
+            // await AddNewLeague(league);
+            // await AddTeamsWithLeagueId(league);
 
+            SelectLeagues();
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
         }
 
         static async Task AddNewLeague(League league)
         {
-            if(context.Leagues.)
             await context.Leagues.AddAsync(league); //define db context - table to interact with - option (object) -- ac tion happens in memory
             await context.SaveChangesAsync(); //generate sql and execute action on db
         }
@@ -46,6 +46,17 @@ namespace EntityFrameworkCore.ConsoleAppv
             };
             await context.AddRangeAsync(teams);
             await context.SaveChangesAsync(); //generate sql and execute action on db
+        }
+
+
+        static async Task SelectLeagues()
+        {
+            var leagues = await context.Leagues.ToListAsync();
+
+            foreach (League league in leagues)
+            {
+                Console.WriteLine($"{league.Id} - {league.Name}");
+            }
         }
     }
 }
