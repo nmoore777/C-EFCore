@@ -1,0 +1,5 @@
+C:\Users\628303\Documents\EntityFrameworkCore\ScaffoldDb.Sample\obj\Debug\net7.0\ScaffoldDb.Sample.csproj.AssemblyReference.cache
+C:\Users\628303\Documents\EntityFrameworkCore\ScaffoldDb.Sample\obj\Debug\net7.0\ScaffoldDb.Sample.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\628303\Documents\EntityFrameworkCore\ScaffoldDb.Sample\obj\Debug\net7.0\ScaffoldDb.Sample.AssemblyInfoInputs.cache
+C:\Users\628303\Documents\EntityFrameworkCore\ScaffoldDb.Sample\obj\Debug\net7.0\ScaffoldDb.Sample.AssemblyInfo.cs
+C:\Users\628303\Documents\EntityFrameworkCore\ScaffoldDb.Sample\obj\Debug\net7.0\ScaffoldDb.Sample.csproj.CoreCompileInputs.cache
