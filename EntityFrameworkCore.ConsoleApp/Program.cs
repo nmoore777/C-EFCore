@@ -19,8 +19,9 @@ namespace EntityFrameworkCore.ConsoleAppv
             // await SelectLeagues();
             // await QueryFilter();
             // await AdditionalExecutionMethods();
-            await altLINQSyntax();
+            // await altLINQSyntax();
 
+            await UpdateRecord();
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
         }
@@ -122,6 +123,112 @@ namespace EntityFrameworkCore.ConsoleAppv
             foreach (var team in teams)
             {
                 Console.WriteLine($"{team.Id} - {team.Name}");
+            }
+        }
+
+        static async Task UpdateRecord()
+        {
+            //Decide which table to alter
+            Console.Write("Are you changing a league or team name? \nleague or team: ");
+            var decision = Console.ReadLine();
+            var ans = "";
+            var cts = new CancellationTokenSource();
+
+            if (decision != null && decision == "team")
+            {
+                //Get User Input
+                Console.Write("Enter Team Id to Alter: "); //if user chooses to alter a team alter Teams table
+                var teamId = Console.ReadLine();
+                //Retrieve Record
+                try
+                {
+                var teamRecord = await context.Teams.FindAsync(Int32.Parse(teamId));
+                
+                //Update Record
+                //Get the User Input for new Team Name
+                Console.Write("Enter New Team Name: ");
+                var newTeamName = Console.ReadLine();
+                var oldTeamName = teamRecord.Name;
+                teamRecord.Name = newTeamName;
+                //Save Record
+                await context.SaveChangesAsync();
+                //Print Changes to Console
+                Console.WriteLine($"Successfully altered team Id {teamId} with name of: {oldTeamName} to: ");
+                await GetRecord(decision, Int32.Parse(teamId));
+                }
+                catch
+                {
+                    Console.Write("Your input was not valid please try again");
+                    await UpdateRecord();
+                }
+
+                //Ask for more input
+                Console.WriteLine("Would you like to alter another entry? \n y or n: ");
+                ans = Console.ReadLine();
+            }
+            else if (decision != null && decision == "league") //if user chooses to alter a league alter Leagues table
+            {
+                // Get User Input
+                Console.Write("Enter League Id to Alter: ");
+                var leagueId = Console.ReadLine();
+                //Retrieve Record
+                try
+                {
+                    var leagueRecord = await context.Leagues.FindAsync(Int32.Parse(leagueId));
+                    //Update Record
+                    //Get the User Input for new Team Name
+                    Console.Write("Enter New League Name: ");
+                    var newLeagueName = Console.ReadLine();
+                    var oldLeagueName = leagueRecord.Name;
+                    leagueRecord.Name = newLeagueName;
+                    //Save Record
+                    await context.SaveChangesAsync();
+                    Console.WriteLine($"Successfully altered league Id {leagueId} with name of: {oldLeagueName} to: ");
+                    await GetRecord(decision, Int32.Parse(leagueId));
+                }
+                catch
+                {
+                   Console.Write("Your input was not valid please try again");
+                    await UpdateRecord();
+                }
+                //Print the record that changed
+                //Ask for more input
+                Console.Write("Would you like to alter another entry? \ny or n: ");
+                ans = Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Your input was not valid would you like to try again? \ny or n");
+                ans = Console.ReadLine();
+            }
+
+            if(ans == "y") //if yes restart the method
+            {
+                await UpdateRecord();
+            }
+            else if(ans == "n" || ans == null) //else bail out
+            {
+                cts.Cancel();
+            }
+        }
+
+        private static async Task GetRecord(string type, int id)
+        {
+            if (type == "team")
+            {
+                var record = await context.Teams.FindAsync(id);
+                Console.WriteLine($"{record.Id} - {record.Name}");
+            }
+            else if (type == "league")
+            {
+                var record = await context.Leagues.FindAsync(id);
+                Console.WriteLine($"{record.Id} - {record.Name}");
+            }
+            else
+            {
+                var cts = new CancellationTokenSource();
+                Console.Write("The record was not found please try again");
+                cts.Cancel();
             }
         }
     }
