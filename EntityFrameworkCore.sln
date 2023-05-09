@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.Data", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.Domain", "EntityFrameworkCore.Domain\EntityFrameworkCore.Domain.csproj", "{C44FDE79-D296-4C11-9F22-E532D9588240}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore.ScaffoldDb", "EntityFrameworkCore.ScaffoldDb\EntityFrameworkCore.ScaffoldDb.csproj", "{8AFE727D-9D01-480F-B3CC-B8C0413CF487}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{C44FDE79-D296-4C11-9F22-E532D9588240}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C44FDE79-D296-4C11-9F22-E532D9588240}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C44FDE79-D296-4C11-9F22-E532D9588240}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AFE727D-9D01-480F-B3CC-B8C0413CF487}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AFE727D-9D01-480F-B3CC-B8C0413CF487}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AFE727D-9D01-480F-B3CC-B8C0413CF487}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AFE727D-9D01-480F-B3CC-B8C0413CF487}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
