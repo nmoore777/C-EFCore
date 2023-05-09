@@ -1775,21 +1775,6 @@
         "runtime": {
           "bin/placeholder/EntityFrameworkCore.Domain.dll": {}
         }
-      },
-      "EntityFrameworkCore.ScaffoldDb/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "EntityFrameworkCore.Data": "1.0.0",
-          "EntityFrameworkCore.Domain": "1.0.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.7"
-        },
-        "compile": {
-          "bin/placeholder/EntityFrameworkCore.ScaffoldDb.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/EntityFrameworkCore.ScaffoldDb.dll": {}
-        }
       }
     }
   },
@@ -6044,18 +6029,12 @@
       "type": "project",
       "path": "../EntityFrameworkCore.Domain/EntityFrameworkCore.Domain.csproj",
       "msbuildProject": "../EntityFrameworkCore.Domain/EntityFrameworkCore.Domain.csproj"
-    },
-    "EntityFrameworkCore.ScaffoldDb/1.0.0": {
-      "type": "project",
-      "path": "../EntityFrameworkCore.ScaffoldDb/EntityFrameworkCore.ScaffoldDb.csproj",
-      "msbuildProject": "../EntityFrameworkCore.ScaffoldDb/EntityFrameworkCore.ScaffoldDb.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "EntityFrameworkCore.Data >= 1.0.0",
       "EntityFrameworkCore.Domain >= 1.0.0",
-      "EntityFrameworkCore.ScaffoldDb >= 1.0.0",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.7"
     ]
   },
@@ -6097,9 +6076,6 @@
             },
             "C:\\Users\\628303\\Documents\\EntityFrameworkCore\\EntityFrameworkCore.Domain\\EntityFrameworkCore.Domain.csproj": {
               "projectPath": "C:\\Users\\628303\\Documents\\EntityFrameworkCore\\EntityFrameworkCore.Domain\\EntityFrameworkCore.Domain.csproj"
-            },
-            "C:\\Users\\628303\\Documents\\EntityFrameworkCore\\EntityFrameworkCore.ScaffoldDb\\EntityFrameworkCore.ScaffoldDb.csproj": {
-              "projectPath": "C:\\Users\\628303\\Documents\\EntityFrameworkCore\\EntityFrameworkCore.ScaffoldDb\\EntityFrameworkCore.ScaffoldDb.csproj"
             }
           }
         }

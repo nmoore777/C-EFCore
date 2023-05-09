@@ -14,7 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EntityFrameworkCore.Data\EntityFrameworkCore.Data.csproj" />
     <ProjectReference Include="..\EntityFrameworkCore.Domain\EntityFrameworkCore.Domain.csproj" />
-    <ProjectReference Include="..\EntityFrameworkCore.ScaffoldDb\EntityFrameworkCore.ScaffoldDb.csproj" />
   </ItemGroup>
 
 </Project>
