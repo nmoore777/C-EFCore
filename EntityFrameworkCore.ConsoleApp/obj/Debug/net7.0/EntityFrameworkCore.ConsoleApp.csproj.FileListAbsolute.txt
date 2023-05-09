@@ -1,8 +1,4 @@
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.exe
-C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.deps.json
-C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.runtimeconfig.json
-C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.dll
-C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.pdb
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\Azure.Core.dll
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\Azure.Identity.dll
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\Humanizer.dll
@@ -68,5 +64,9 @@ C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\obj
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\obj\Debug\net7.0\EntityFrameworkCore.ConsoleApp.dll
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\obj\Debug\net7.0\refint\EntityFrameworkCore.ConsoleApp.dll
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\obj\Debug\net7.0\EntityFrameworkCore.ConsoleApp.pdb
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.deps.json
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.runtimeconfig.json
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.dll
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\bin\Debug\net7.0\EntityFrameworkCore.ConsoleApp.pdb
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\obj\Debug\net7.0\EntityFrameworkCore.ConsoleApp.genruntimeconfig.cache
 C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.ConsoleApp\obj\Debug\net7.0\ref\EntityFrameworkCore.ConsoleApp.dll

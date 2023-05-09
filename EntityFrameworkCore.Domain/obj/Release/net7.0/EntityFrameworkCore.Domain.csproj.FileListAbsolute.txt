@@ -1,0 +1,12 @@
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\bin\Release\net7.0\EntityFrameworkCore.Domain.deps.json
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\bin\Release\net7.0\EntityFrameworkCore.Domain.dll
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\bin\Release\net7.0\EntityFrameworkCore.Domain.pdb
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\EntityFrameworkCore.Domain.csproj.AssemblyReference.cache
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\EntityFrameworkCore.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\EntityFrameworkCore.Domain.AssemblyInfoInputs.cache
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\EntityFrameworkCore.Domain.AssemblyInfo.cs
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\EntityFrameworkCore.Domain.csproj.CoreCompileInputs.cache
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\EntityFrameworkCore.Domain.dll
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\refint\EntityFrameworkCore.Domain.dll
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\EntityFrameworkCore.Domain.pdb
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Domain\obj\Release\net7.0\ref\EntityFrameworkCore.Domain.dll
