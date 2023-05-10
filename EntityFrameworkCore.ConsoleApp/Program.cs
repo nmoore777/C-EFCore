@@ -1,7 +1,9 @@
 ﻿using EntityFrameworkCore.Data;
 using EntityFrameworkCore.Data.Migrations;
 using EntityFrameworkCore.Domain;
+using EntityFrameworkCore.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EntityFrameworkCore.ConsoleAppv
 {
@@ -69,8 +71,13 @@ namespace EntityFrameworkCore.ConsoleAppv
             */
 
             /* Including Related Data- Eager Loading */
-            await QueryRelatedRecords(4);
+            //await QueryRelatedRecords(4);
 
+            //await AnonymousProjection();
+            //await StronglyTypedProjection();
+
+
+            await FilteringWithRelatedData();
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
         }
@@ -105,7 +112,7 @@ namespace EntityFrameworkCore.ConsoleAppv
             await context.SaveChangesAsync();
         }
       
-         static async Task AddNewLeagueWithTeams(string leagueName)
+        static async Task AddNewLeagueWithTeams(string leagueName)
         {
             var teams = new List<Team>
             {
@@ -325,7 +332,59 @@ namespace EntityFrameworkCore.ConsoleAppv
                 .ToListAsync();
         }
 
-        private static async Task GetRecord(string type, int id)
+        static async Task SelectOneProp()
+        {
+            var teams = await context.Teams.Select(q => q.Name).ToListAsync();
+        } 
+
+        static async Task AnonymousProjection()
+        {
+            var teams = await context.Teams
+                .Include(q => q.Coach)
+                .Select(q => 
+                    new { 
+                        TeamName = q.Name,
+                        CoachName = q.Coach.Name,
+                    })
+                .ToListAsync();
+            foreach( var team in teams)
+            {
+                Console.WriteLine($"Team: {team.TeamName} | Coach: {team.CoachName}");
+            }
+
+        }
+
+        static async Task StronglyTypedProjection()
+        {
+            var teams = await context.Teams
+                .Include(q => q.Coach)
+                .Include(q => q.League)
+                .Select(q =>
+                    new TeamDetail {
+                        TeamName = q.Name,
+                        CoachName = q.Coach.Name,
+                        LeagueName = q.League.Name,
+                    })
+                .ToListAsync();
+            foreach (var team in teams)
+            {
+                Console.WriteLine($"Team: {team.TeamName} | Coach: {team.CoachName}");
+            }
+        }
+
+        static async Task FilteringWithRelatedData() //produces league name based on search for a partial team name
+        {
+            var leagues = await context.Leagues.
+                Where(q => q.Teams.Any(x => x.Name.Contains("This")))
+                .ToListAsync();
+
+            foreach(var league in leagues)
+            {
+                Console.WriteLine(league.Name); 
+            }
+        }
+
+        static async Task GetRecord(string type, int id)
         {
             if (type == "team")
             {
@@ -347,19 +406,19 @@ namespace EntityFrameworkCore.ConsoleAppv
             }
         }
 
-        private static async Task SimpleDelete(League league)
+        static async Task SimpleDelete(League league)
         {
             context.Leagues.Remove(league);
             await context.SaveChangesAsync();
         }
 
-        private static async Task DeleteWithRelationship(League league)
+        static async Task DeleteWithRelationship(League league)
         {
             context.Leagues.Remove(league);
             await context.SaveChangesAsync();
         }
 
-        private static async Task TrackingVsNoTracking()
+        static async Task TrackingVsNoTracking()
         {
             var with = await context.Teams.FirstOrDefaultAsync(q => q.Id == 4);
             var withOut = await context.Teams.AsNoTracking().FirstOrDefaultAsync(q => q.Id == 6);
