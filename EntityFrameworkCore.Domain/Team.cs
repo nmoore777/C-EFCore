@@ -9,8 +9,12 @@ namespace EntityFrameworkCore.Domain
     public class Team
     {
         public int Id { get; set; } //primary key
+        
+        //attibutes
         public string Name { get; set; }
-        public int LeagueId { get; set; } //foreign key
-        public virtual League League { get; set; } //related table
+
+        //foreign keys and relationships
+        public int LeagueId { get; set; } //league foreign key
+        public virtual League League { get; set; } //related league table 
     }
 }
