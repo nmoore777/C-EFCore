@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkCore.Data;
+using EntityFrameworkCore.Data.Migrations;
 using EntityFrameworkCore.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,6 +58,15 @@ namespace EntityFrameworkCore.ConsoleAppv
 
             //await TrackingVsNoTracking();
 
+
+            await AddNewTeamWithLeague("Test Team", 5);
+            await AddNewLeagueWithTeams("Test League");
+
+            await AddNewMatches();
+
+            await AddNewCoachWithoutTeam("Coach W_O_Team");
+            await AddNewCoachWithTeam("Coach W_Team", 4);
+
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
         }
@@ -67,29 +77,65 @@ namespace EntityFrameworkCore.ConsoleAppv
             await context.SaveChangesAsync(); //generate sql and execute action on db
         }
 
-        static async Task AddTeamsWithLeagueId(League league)
+        static async Task AddNewCoachWithoutTeam(string coachName)
         {
-            var teams = new List<Team> {
-            new Team
-            {
-                Name = "A",
-                LeagueId = league.Id
-            },
-            new Team
-            {
-                Name = "B",
-                LeagueId = league.Id
-            },
-            new Team
-            {
-                Name = "C",
-                LeagueId = league.Id
-            }
-            };
-            await context.AddRangeAsync(teams);
-            await context.SaveChangesAsync(); //generate sql and execute action on db
+            var coach = new Coach { Name = coachName };
+
+            await context.Coaches.AddRangeAsync(coach);
+            await context.SaveChangesAsync();
         }
 
+        static async Task AddNewCoachWithTeam(string coachName, int teamId)
+        {
+            var coach = new Coach { Name = coachName , TeamID = teamId};
+
+            await context.Coaches.AddRangeAsync(coach);
+            await context.SaveChangesAsync();
+        }
+
+        static async Task AddNewTeamWithLeague(string teamName, int leagueId)
+        {
+            var team = new Team { Name = teamName, LeagueId = leagueId };
+
+            await context.Teams.AddAsync(team);
+            await context.SaveChangesAsync();
+        }
+      
+         static async Task AddNewLeagueWithTeams(string leagueName)
+        {
+            var teams = new List<Team>
+            {
+                new Team { Name = "Team 1"},
+                new Team { Name = "Team 2"},
+            };
+
+            var league = new League { Name = leagueName , Teams = teams};
+            await context.Leagues.AddAsync(league);
+            await context.SaveChangesAsync();
+
+        }
+
+        static async Task AddNewMatches()
+        {
+            var matches = new List<Match>
+            {
+                new Match
+                {
+                    AwayTeamId = 4, HomeTeamId = 5, Date = DateTime.Now
+                },
+                new Match
+                {
+                    AwayTeamId = 5, HomeTeamId = 4, Date = DateTime.Now
+                },
+                new Match
+                {
+                    AwayTeamId = 5, HomeTeamId = 6, Date = DateTime.Now
+                },
+            };
+
+            await context.AddRangeAsync(matches);
+            await context.SaveChangesAsync();
+        }
 
         static async Task SelectLeagues()
         {
@@ -98,6 +144,7 @@ namespace EntityFrameworkCore.ConsoleAppv
             foreach (League league in leagues)
             {
                 Console.WriteLine($"{league.Id} - {league.Name}");
+                RECORD_LEAGUE = league;
             }
         }
 
