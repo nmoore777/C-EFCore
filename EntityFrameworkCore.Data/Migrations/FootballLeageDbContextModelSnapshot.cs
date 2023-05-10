@@ -108,6 +108,22 @@ namespace EntityFrameworkCore.Data.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("EntityFrameworkCore.Domain.Views.TeamsCoachesLeaguesView", b =>
+                {
+                    b.Property<string>("CoachName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LeagueName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("TeamsCoachesLeagues", (string)null);
+                });
+
             modelBuilder.Entity("EntityFrameworkCore.Domain.Coach", b =>
                 {
                     b.HasOne("EntityFrameworkCore.Domain.Team", "Team")

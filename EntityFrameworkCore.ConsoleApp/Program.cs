@@ -3,6 +3,7 @@ using EntityFrameworkCore.Data.Migrations;
 using EntityFrameworkCore.Domain;
 using EntityFrameworkCore.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EntityFrameworkCore.ConsoleAppv
@@ -79,6 +80,7 @@ namespace EntityFrameworkCore.ConsoleAppv
 
             //await FilteringWithRelatedData();
 
+            await QueryView();
 
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
@@ -445,6 +447,9 @@ namespace EntityFrameworkCore.ConsoleAppv
 
         }
 
-        
+        static async Task QueryView()
+        {
+            var details = await context.teamsCoachesLeagues.ToListAsync();
+        }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using EntityFrameworkCore.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
-
+using EntityFrameworkCore.Domain.Views;
 namespace EntityFrameworkCore.Data
 {
     public class FootballLeageDbContext : DbContext
@@ -29,11 +30,15 @@ namespace EntityFrameworkCore.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);//cannot remove team unless removed matches before
 
+            modelBuilder.Entity<TeamsCoachesLeaguesView>().HasNoKey().ToView("TeamsCoachesLeagues");
+
         }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Coach> Coaches { get; set; }
         public DbSet<League> Leagues { get; set; }
         public DbSet<Match> Matches { get; set; }
+
+        public DbSet<TeamsCoachesLeaguesView> teamsCoachesLeagues { get; set; }
 
     }
 }

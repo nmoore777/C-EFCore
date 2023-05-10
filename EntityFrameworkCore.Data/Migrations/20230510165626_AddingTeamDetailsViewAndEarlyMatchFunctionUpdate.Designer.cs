@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkCore.Data.Migrations
 {
     [DbContext(typeof(FootballLeageDbContext))]
-    [Migration("20230510161629_AddingTeamDetailsViewAndEarlyMatchFunction")]
-    partial class AddingTeamDetailsViewAndEarlyMatchFunction
+    [Migration("20230510165626_AddingTeamDetailsViewAndEarlyMatchFunctionUpdate")]
+    partial class AddingTeamDetailsViewAndEarlyMatchFunctionUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,22 @@ namespace EntityFrameworkCore.Data.Migrations
                     b.HasIndex("LeagueId");
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("EntityFrameworkCore.Domain.Views.TeamsCoachesLeaguesView", b =>
+                {
+                    b.Property<string>("CoachName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LeagueName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("TeamsCoachesLeagues", (string)null);
                 });
 
             modelBuilder.Entity("EntityFrameworkCore.Domain.Coach", b =>
