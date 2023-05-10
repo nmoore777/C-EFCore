@@ -58,7 +58,7 @@ namespace EntityFrameworkCore.ConsoleAppv
 
             //await TrackingVsNoTracking();
 
-
+            /* loading some test relationship data
             await AddNewTeamWithLeague("Test Team", 5);
             await AddNewLeagueWithTeams("Test League");
 
@@ -66,6 +66,10 @@ namespace EntityFrameworkCore.ConsoleAppv
 
             await AddNewCoachWithoutTeam("Coach W_O_Team");
             await AddNewCoachWithTeam("Coach W_Team", 4);
+            */
+
+            /* Including Related Data- Eager Loading */
+            await QueryRelatedRecords(4);
 
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
@@ -293,6 +297,33 @@ namespace EntityFrameworkCore.ConsoleAppv
                 cts.Cancel();
             }
         }
+        
+        static async Task QueryRelatedRecords(int teamId)
+        {
+            //all records
+            var leagues = await context.Leagues
+                .Include(q => q.Teams)
+                .ToListAsync();
+
+            //one record
+            var team = await context.Teams
+                .Include(t => t.Coach)
+                .FirstOrDefaultAsync(q => q.Id == teamId);
+            /*
+            //grand-children inclusion
+            var teamsWithMatchesAndOpponents = await context.Teams
+                .Include(t => t.AwayMatches).ThenInclude(t => t.HomeTeam).ThenInclude(t => t.Coach) //if away match include home team details
+                //.Include(t => t.HomeMatches).ThenInclude(t => t.AwayTeam).ThenInclude(t => t.Coach) //if home match include away team details
+                .FirstOrDefaultAsync(q => q.Id == teamId); 
+            */
+
+
+            //grandchildren inclusion with filters
+            var teams = await context.Teams
+                .Where(q => q.HomeMatches.Count > 0)
+                .Include(q => q.Coach)
+                .ToListAsync();
+        }
 
         private static async Task GetRecord(string type, int id)
         {
@@ -352,5 +383,7 @@ namespace EntityFrameworkCore.ConsoleAppv
             }
 
         }
+
+        
     }
 }
