@@ -18,8 +18,4 @@
     <ProjectReference Include="..\EntityFrameworkCore.Domain\EntityFrameworkCore.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SQL\" />
-  </ItemGroup>
-
 </Project>

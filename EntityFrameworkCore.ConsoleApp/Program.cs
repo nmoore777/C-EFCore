@@ -80,7 +80,11 @@ namespace EntityFrameworkCore.ConsoleAppv
 
             //await FilteringWithRelatedData();
 
-            await QueryView();
+            /* sql queries */
+            //await QueryView();
+
+            //await RawSQLQuery();
+            //await ExecNonQueryCommand();
 
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
@@ -450,6 +454,31 @@ namespace EntityFrameworkCore.ConsoleAppv
         static async Task QueryView()
         {
             var details = await context.teamsCoachesLeagues.ToListAsync();
+        }
+
+        static async Task RawSQLQuery()
+        {
+            var name = "A";
+
+            /*example of raw sql which is subject to sql injection */
+            var teamsRaw = await context.Teams.FromSqlRaw($"SELECT * FROM Teams WHERE Name = '{name}'").Include(q => q.Coach).ToListAsync();
+
+            //parameterized solution -- solution for sql injection USE THIS
+            var teamsInterpolated = await context.Teams.FromSqlInterpolated($"SELECT * FROM Teams WHERE Name = '{name}'").Include(q => q.Coach).ToListAsync();
+        }
+
+        static async Task ExecStoredProcedure()
+        {
+            var teamId = 3;
+            var result = await context.Coaches.FromSqlRaw("EXEC dbo.sp_GetTeamCoach {0}", teamId).ToListAsync();
+        }
+
+        static async Task ExecNonQueryCommand()
+        {
+            var teamId = 16;
+            var teamId2 = 15;
+            var teams1 = await context.Database.ExecuteSqlRawAsync("EXEC sp_DeleteTeamById {0}", teamId);
+            var teams2 = await context.Database.ExecuteSqlInterpolatedAsync($"EXEC sp_DeleteTeamById {teamId2}");
         }
     }
 }

@@ -15,3 +15,10 @@ FROM  dbo.Teams AS t LEFT OUTER JOIN
 					dbo.Coaches AS c ON t.Id = c.TeamId INNER JOIN
 					dbo.Leagues AS l ON t.LeagueId = l.Id
 
+CREATE PROCEDURE sp_GetTeamCoach
+	@TeamId int
+AS
+BEGIN
+	SELECT * FROM Coaches WHERE TeamId = @teamId
+END
+GO
