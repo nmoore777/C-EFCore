@@ -1,9 +1,6 @@
 ﻿using EntityFrameworkCore.Data;
 using EntityFrameworkCore.Domain;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.Identity.Client;
 
 namespace EntityFrameworkCore.ConsoleAppv
 {
@@ -72,7 +69,7 @@ namespace EntityFrameworkCore.ConsoleAppv
 
         static async Task AddTeamsWithLeagueId(League league)
         {
-            var teams = new List<Team> { 
+            var teams = new List<Team> {
             new Team
             {
                 Name = "A",
@@ -134,11 +131,11 @@ namespace EntityFrameworkCore.ConsoleAppv
             var first = await leagues.Where(q => q.Name.Contains("A")).FirstOrDefaultAsync();
             var first2 = await leagues.FirstOrDefaultAsync(q => q.Name.Contains("A"));
 
-            
+
             //execute search expecting only one record to return true if more than one record will return default
-                // var single = await leagues.SingleAsync();
+            // var single = await leagues.SingleAsync();
             //execute search expecting only one record to return true if more than one record will return error
-                //var single2 = await leagues.SingleOrDefaultAsync();
+            //var single2 = await leagues.SingleOrDefaultAsync();
 
             //traditional aggregate f(x)
             var count = await leagues.CountAsync();
@@ -180,19 +177,19 @@ namespace EntityFrameworkCore.ConsoleAppv
                 //Retrieve Record
                 try
                 {
-                var teamRecord = await context.Teams.FindAsync(Int32.Parse(teamId));
-                
-                //Update Record
-                //Get the User Input for new Team Name
-                Console.Write("Enter New Team Name: ");
-                var newTeamName = Console.ReadLine();
-                var oldTeamName = teamRecord.Name;
-                teamRecord.Name = newTeamName;
-                //Save Record
-                await context.SaveChangesAsync();
-                //Print Changes to Console
-                Console.WriteLine($"Successfully altered team Id {teamId} with name of: {oldTeamName} to: ");
-                await GetRecord(decision, Int32.Parse(teamId));
+                    var teamRecord = await context.Teams.FindAsync(Int32.Parse(teamId));
+
+                    //Update Record
+                    //Get the User Input for new Team Name
+                    Console.Write("Enter New Team Name: ");
+                    var newTeamName = Console.ReadLine();
+                    var oldTeamName = teamRecord.Name;
+                    teamRecord.Name = newTeamName;
+                    //Save Record
+                    await context.SaveChangesAsync();
+                    //Print Changes to Console
+                    Console.WriteLine($"Successfully altered team Id {teamId} with name of: {oldTeamName} to: ");
+                    await GetRecord(decision, Int32.Parse(teamId));
                 }
                 catch
                 {
@@ -226,7 +223,7 @@ namespace EntityFrameworkCore.ConsoleAppv
                 }
                 catch
                 {
-                   Console.Write("Your input was not valid please try again");
+                    Console.Write("Your input was not valid please try again");
                     await UpdateRecord();
                 }
                 //Print the record that changed
@@ -240,11 +237,11 @@ namespace EntityFrameworkCore.ConsoleAppv
                 ans = Console.ReadLine();
             }
 
-            if(ans == "y") //if yes restart the method
+            if (ans == "y") //if yes restart the method
             {
                 await UpdateRecord();
             }
-            else if(ans == "n" || ans == null) //else bail out
+            else if (ans == "n" || ans == null) //else bail out
             {
                 cts.Cancel();
             }
@@ -293,7 +290,7 @@ namespace EntityFrameworkCore.ConsoleAppv
             withOut.Name = "That Team";
 
             var entriesBeforeSave = context.ChangeTracker.Entries();
-            foreach(var i in entriesBeforeSave)
+            foreach (var i in entriesBeforeSave)
             {
                 Console.WriteLine(i.ToString());
 
