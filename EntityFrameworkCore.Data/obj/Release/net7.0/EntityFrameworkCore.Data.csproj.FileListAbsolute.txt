@@ -1,0 +1,17 @@
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\bin\Release\net7.0\EntityFrameworkCore.Data.deps.json
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\bin\Release\net7.0\EntityFrameworkCore.Data.runtimeconfig.json
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\bin\Release\net7.0\EntityFrameworkCore.Data.dll
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\bin\Release\net7.0\EntityFrameworkCore.Data.pdb
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\bin\Release\net7.0\EntityFrameworkCore.Domain.dll
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\bin\Release\net7.0\EntityFrameworkCore.Domain.pdb
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.csproj.AssemblyReference.cache
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.AssemblyInfoInputs.cache
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.AssemblyInfo.cs
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.csproj.CoreCompileInputs.cache
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.csproj.CopyComplete
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.dll
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\refint\EntityFrameworkCore.Data.dll
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.pdb
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\EntityFrameworkCore.Data.genruntimeconfig.cache
+C:\Users\628303\Documents\EntityFrameworkCore\EntityFrameworkCore.Data\obj\Release\net7.0\ref\EntityFrameworkCore.Data.dll
