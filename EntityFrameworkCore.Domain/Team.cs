@@ -8,6 +8,7 @@ namespace EntityFrameworkCore.Domain
         public string Name { get; set; }
 
         //foreign keys and relationships
+        public virtual Coach Coach { get; set; }
         public int LeagueId { get; set; } //league key
         public virtual League League { get; set; } //league table 
 
