@@ -77,7 +77,9 @@ namespace EntityFrameworkCore.ConsoleAppv
             //await StronglyTypedProjection();
 
 
-            await FilteringWithRelatedData();
+            //await FilteringWithRelatedData();
+
+
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
         }
