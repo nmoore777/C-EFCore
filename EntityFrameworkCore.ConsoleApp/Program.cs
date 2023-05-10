@@ -1,9 +1,9 @@
 ﻿using EntityFrameworkCore.Data;
+using EntityFrameworkCore.Data.Migrations;
 using EntityFrameworkCore.Domain;
-using Microsoft.Data.SqlClient;
+using EntityFrameworkCore.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace EntityFrameworkCore.ConsoleAppv
 {
@@ -60,6 +60,24 @@ namespace EntityFrameworkCore.ConsoleAppv
 
             //await TrackingVsNoTracking();
 
+            /* loading some test relationship data
+            await AddNewTeamWithLeague("Test Team", 5);
+            await AddNewLeagueWithTeams("Test League");
+
+            await AddNewMatches();
+
+            await AddNewCoachWithoutTeam("Coach W_O_Team");
+            await AddNewCoachWithTeam("Coach W_Team", 4);
+            */
+
+            /* Including Related Data- Eager Loading */
+            //await QueryRelatedRecords(4);
+
+            //await AnonymousProjection();
+            //await StronglyTypedProjection();
+
+
+            await FilteringWithRelatedData();
             Console.WriteLine("Press any key to end...");
             Console.ReadKey();
         }
@@ -70,29 +88,65 @@ namespace EntityFrameworkCore.ConsoleAppv
             await context.SaveChangesAsync(); //generate sql and execute action on db
         }
 
-        static async Task AddTeamsWithLeagueId(League league)
+        static async Task AddNewCoachWithoutTeam(string coachName)
         {
-            var teams = new List<Team> { 
-            new Team
-            {
-                Name = "A",
-                LeagueId = league.Id
-            },
-            new Team
-            {
-                Name = "B",
-                LeagueId = league.Id
-            },
-            new Team
-            {
-                Name = "C",
-                LeagueId = league.Id
-            }
-            };
-            await context.AddRangeAsync(teams);
-            await context.SaveChangesAsync(); //generate sql and execute action on db
+            var coach = new Coach { Name = coachName };
+
+            await context.Coaches.AddRangeAsync(coach);
+            await context.SaveChangesAsync();
         }
 
+        static async Task AddNewCoachWithTeam(string coachName, int teamId)
+        {
+            var coach = new Coach { Name = coachName , TeamID = teamId};
+
+            await context.Coaches.AddRangeAsync(coach);
+            await context.SaveChangesAsync();
+        }
+
+        static async Task AddNewTeamWithLeague(string teamName, int leagueId)
+        {
+            var team = new Team { Name = teamName, LeagueId = leagueId };
+
+            await context.Teams.AddAsync(team);
+            await context.SaveChangesAsync();
+        }
+      
+        static async Task AddNewLeagueWithTeams(string leagueName)
+        {
+            var teams = new List<Team>
+            {
+                new Team { Name = "Team 1"},
+                new Team { Name = "Team 2"},
+            };
+
+            var league = new League { Name = leagueName , Teams = teams};
+            await context.Leagues.AddAsync(league);
+            await context.SaveChangesAsync();
+
+        }
+
+        static async Task AddNewMatches()
+        {
+            var matches = new List<Match>
+            {
+                new Match
+                {
+                    AwayTeamId = 4, HomeTeamId = 5, Date = DateTime.Now
+                },
+                new Match
+                {
+                    AwayTeamId = 5, HomeTeamId = 4, Date = DateTime.Now
+                },
+                new Match
+                {
+                    AwayTeamId = 5, HomeTeamId = 6, Date = DateTime.Now
+                },
+            };
+
+            await context.AddRangeAsync(matches);
+            await context.SaveChangesAsync();
+        }
 
         static async Task SelectLeagues()
         {
@@ -101,6 +155,7 @@ namespace EntityFrameworkCore.ConsoleAppv
             foreach (League league in leagues)
             {
                 Console.WriteLine($"{league.Id} - {league.Name}");
+                RECORD_LEAGUE = league;
             }
         }
 
@@ -134,11 +189,11 @@ namespace EntityFrameworkCore.ConsoleAppv
             var first = await leagues.Where(q => q.Name.Contains("A")).FirstOrDefaultAsync();
             var first2 = await leagues.FirstOrDefaultAsync(q => q.Name.Contains("A"));
 
-            
+
             //execute search expecting only one record to return true if more than one record will return default
-                // var single = await leagues.SingleAsync();
+            // var single = await leagues.SingleAsync();
             //execute search expecting only one record to return true if more than one record will return error
-                //var single2 = await leagues.SingleOrDefaultAsync();
+            //var single2 = await leagues.SingleOrDefaultAsync();
 
             //traditional aggregate f(x)
             var count = await leagues.CountAsync();
@@ -180,19 +235,19 @@ namespace EntityFrameworkCore.ConsoleAppv
                 //Retrieve Record
                 try
                 {
-                var teamRecord = await context.Teams.FindAsync(Int32.Parse(teamId));
-                
-                //Update Record
-                //Get the User Input for new Team Name
-                Console.Write("Enter New Team Name: ");
-                var newTeamName = Console.ReadLine();
-                var oldTeamName = teamRecord.Name;
-                teamRecord.Name = newTeamName;
-                //Save Record
-                await context.SaveChangesAsync();
-                //Print Changes to Console
-                Console.WriteLine($"Successfully altered team Id {teamId} with name of: {oldTeamName} to: ");
-                await GetRecord(decision, Int32.Parse(teamId));
+                    var teamRecord = await context.Teams.FindAsync(Int32.Parse(teamId));
+
+                    //Update Record
+                    //Get the User Input for new Team Name
+                    Console.Write("Enter New Team Name: ");
+                    var newTeamName = Console.ReadLine();
+                    var oldTeamName = teamRecord.Name;
+                    teamRecord.Name = newTeamName;
+                    //Save Record
+                    await context.SaveChangesAsync();
+                    //Print Changes to Console
+                    Console.WriteLine($"Successfully altered team Id {teamId} with name of: {oldTeamName} to: ");
+                    await GetRecord(decision, Int32.Parse(teamId));
                 }
                 catch
                 {
@@ -226,7 +281,7 @@ namespace EntityFrameworkCore.ConsoleAppv
                 }
                 catch
                 {
-                   Console.Write("Your input was not valid please try again");
+                    Console.Write("Your input was not valid please try again");
                     await UpdateRecord();
                 }
                 //Print the record that changed
@@ -240,17 +295,96 @@ namespace EntityFrameworkCore.ConsoleAppv
                 ans = Console.ReadLine();
             }
 
-            if(ans == "y") //if yes restart the method
+            if (ans == "y") //if yes restart the method
             {
                 await UpdateRecord();
             }
-            else if(ans == "n" || ans == null) //else bail out
+            else if (ans == "n" || ans == null) //else bail out
             {
                 cts.Cancel();
             }
         }
+        
+        static async Task QueryRelatedRecords(int teamId)
+        {
+            //all records
+            var leagues = await context.Leagues
+                .Include(q => q.Teams)
+                .ToListAsync();
 
-        private static async Task GetRecord(string type, int id)
+            //one record
+            var team = await context.Teams
+                .Include(t => t.Coach)
+                .FirstOrDefaultAsync(q => q.Id == teamId);
+            /*
+            //grand-children inclusion
+            var teamsWithMatchesAndOpponents = await context.Teams
+                .Include(t => t.AwayMatches).ThenInclude(t => t.HomeTeam).ThenInclude(t => t.Coach) //if away match include home team details
+                //.Include(t => t.HomeMatches).ThenInclude(t => t.AwayTeam).ThenInclude(t => t.Coach) //if home match include away team details
+                .FirstOrDefaultAsync(q => q.Id == teamId); 
+            */
+
+
+            //grandchildren inclusion with filters
+            var teams = await context.Teams
+                .Where(q => q.HomeMatches.Count > 0)
+                .Include(q => q.Coach)
+                .ToListAsync();
+        }
+
+        static async Task SelectOneProp()
+        {
+            var teams = await context.Teams.Select(q => q.Name).ToListAsync();
+        } 
+
+        static async Task AnonymousProjection()
+        {
+            var teams = await context.Teams
+                .Include(q => q.Coach)
+                .Select(q => 
+                    new { 
+                        TeamName = q.Name,
+                        CoachName = q.Coach.Name,
+                    })
+                .ToListAsync();
+            foreach( var team in teams)
+            {
+                Console.WriteLine($"Team: {team.TeamName} | Coach: {team.CoachName}");
+            }
+
+        }
+
+        static async Task StronglyTypedProjection()
+        {
+            var teams = await context.Teams
+                .Include(q => q.Coach)
+                .Include(q => q.League)
+                .Select(q =>
+                    new TeamDetail {
+                        TeamName = q.Name,
+                        CoachName = q.Coach.Name,
+                        LeagueName = q.League.Name,
+                    })
+                .ToListAsync();
+            foreach (var team in teams)
+            {
+                Console.WriteLine($"Team: {team.TeamName} | Coach: {team.CoachName}");
+            }
+        }
+
+        static async Task FilteringWithRelatedData() //produces league name based on search for a partial team name
+        {
+            var leagues = await context.Leagues.
+                Where(q => q.Teams.Any(x => x.Name.Contains("This")))
+                .ToListAsync();
+
+            foreach(var league in leagues)
+            {
+                Console.WriteLine(league.Name); 
+            }
+        }
+
+        static async Task GetRecord(string type, int id)
         {
             if (type == "team")
             {
@@ -272,19 +406,19 @@ namespace EntityFrameworkCore.ConsoleAppv
             }
         }
 
-        private static async Task SimpleDelete(League league)
+        static async Task SimpleDelete(League league)
         {
             context.Leagues.Remove(league);
             await context.SaveChangesAsync();
         }
 
-        private static async Task DeleteWithRelationship(League league)
+        static async Task DeleteWithRelationship(League league)
         {
             context.Leagues.Remove(league);
             await context.SaveChangesAsync();
         }
 
-        private static async Task TrackingVsNoTracking()
+        static async Task TrackingVsNoTracking()
         {
             var with = await context.Teams.FirstOrDefaultAsync(q => q.Id == 4);
             var withOut = await context.Teams.AsNoTracking().FirstOrDefaultAsync(q => q.Id == 6);
@@ -293,7 +427,7 @@ namespace EntityFrameworkCore.ConsoleAppv
             withOut.Name = "That Team";
 
             var entriesBeforeSave = context.ChangeTracker.Entries();
-            foreach(var i in entriesBeforeSave)
+            foreach (var i in entriesBeforeSave)
             {
                 Console.WriteLine(i.ToString());
 
@@ -308,5 +442,7 @@ namespace EntityFrameworkCore.ConsoleAppv
             }
 
         }
+
+        
     }
 }

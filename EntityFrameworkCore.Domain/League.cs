@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EntityFrameworkCore.Domain.Common;
 
 namespace EntityFrameworkCore.Domain
 {
-    public class League
+    public class League : BaseDomainObject
     {
-        public int Id { get; set; }
 
+        //attributes
         public string Name { get; set; }
+        public List<Team> Teams { get; set; } //getter for teams list by either getting league by id or nmame
     }
 }

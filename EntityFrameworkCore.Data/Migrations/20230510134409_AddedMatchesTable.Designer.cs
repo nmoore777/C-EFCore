@@ -4,6 +4,7 @@ using EntityFrameworkCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkCore.Data.Migrations
 {
     [DbContext(typeof(FootballLeageDbContext))]
-    partial class FootballLeageDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230510134409_AddedMatchesTable")]
+    partial class AddedMatchesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,29 +24,6 @@ namespace EntityFrameworkCore.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("EntityFrameworkCore.Domain.Coach", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TeamID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TeamID")
-                        .IsUnique()
-                        .HasFilter("[TeamID] IS NOT NULL");
-
-                    b.ToTable("Coaches");
-                });
 
             modelBuilder.Entity("EntityFrameworkCore.Domain.League", b =>
                 {
@@ -108,15 +88,6 @@ namespace EntityFrameworkCore.Data.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("EntityFrameworkCore.Domain.Coach", b =>
-                {
-                    b.HasOne("EntityFrameworkCore.Domain.Team", "Team")
-                        .WithOne("Coach")
-                        .HasForeignKey("EntityFrameworkCore.Domain.Coach", "TeamID");
-
-                    b.Navigation("Team");
-                });
-
             modelBuilder.Entity("EntityFrameworkCore.Domain.Match", b =>
                 {
                     b.HasOne("EntityFrameworkCore.Domain.Team", "HomeTeam")
@@ -155,8 +126,6 @@ namespace EntityFrameworkCore.Data.Migrations
             modelBuilder.Entity("EntityFrameworkCore.Domain.Team", b =>
                 {
                     b.Navigation("AwayMatches");
-
-                    b.Navigation("Coach");
 
                     b.Navigation("HomeMatches");
                 });

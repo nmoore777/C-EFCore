@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EntityFrameworkCore.Domain.Common;
 
 namespace EntityFrameworkCore.Domain
 {
-    public class Team
+    public class Team : BaseDomainObject
     {
-        public int Id { get; set; } //primary key
+        //attibutes
         public string Name { get; set; }
-        public int LeagueId { get; set; } //foreign key
-        public virtual League League { get; set; } //related table
+
+        //foreign keys and relationships
+        public virtual Coach Coach { get; set; }
+        public int LeagueId { get; set; } //league key
+        public virtual League League { get; set; } //league table 
+
+        public virtual List<Match> HomeMatches { get; set; }
+        public virtual List<Match> AwayMatches { get; set; }
     }
 }
